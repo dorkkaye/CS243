@@ -111,7 +111,7 @@ void JMPZ()
   if(ZF=1)
   {
     I=(DR&0x00FF);
-    P=I
+    PC=I;
   }
 }
 
@@ -120,7 +120,7 @@ void JMPNZ()
   if(ZF=0)
   {
     I=(DR&0x00FF);
-    P=I
+    PC=I;
   }
 }
 
@@ -131,26 +131,53 @@ void NOP()
 
 void AND()
 {
-  I=(DR&0x00FF);
-  D=(DR>>9);
-  D=(D&0xFFF3);
-  
-  //D 0,1,2
-  if(D==0)
-    W=I;
-  if(D==1)
-    FR1=I;
-  if(D==2)
-    FR2=1;
+  if(W&W==0)
+    ZF=1;
+  if(FR1&FR1==0)
+    ZF=1;
+  if(FR2&FR2==0)
+    ZF=1;
 }
 
-void OR(){}
+void OR()
+{
+  if(W|W==0)
+    ZF=1;
+  if(FR1|FR1==0)
+    ZF=1;
+  if(FR2|FR2==0)
+    ZF=1;
+}
 
-void XOR(){}
+void XOR()
+{
+  if(W^W==0)
+    ZF=1;
+  if(FR1^FR1==0)
+    ZF=1;
+  if(FR2^FR2==0)
+    ZF=1;
+}
 
-void ADD(){}
+void ADD()
+{
+  if(W+W==0)
+    ZF=1;
+  if(FR1+FR1==0)
+    ZF=1;
+  if(FR2+FR2==0)
+    ZF=1;
+}
 
-void SUB(){}
+void SUB()
+{
+  if(W-W==0)
+    ZF=1;
+  if(FR1-FR1==0)
+    ZF=1;
+  if(FR2-FR2==0)
+    ZF=1;
+}
 
 void loop() 
 {
